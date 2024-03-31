@@ -100,8 +100,27 @@ public class EmployeeController {
 
     //従業員更新画面
     @GetMapping(value = "/{code}/update")
-    public String update(@PathVariable String code, @AuthenticationPrincipal UserDetail userDetail, Model model) {
+    public String edit(@PathVariable String code, Employee employee, Model model) {
+
+        if(code == null) {
+            model.addAttribute("employee", employee);
+        } else {
+            model.addAttribute("employee", employeeService.findByCode(code));
+        }
         return "employees/update";
+    }
+
+    //従業員更新処理
+    @PostMapping(value = "{code}/update")
+    public String update(@Validated Employee employee, BindingResult res, Model model) {
+
+        //エラーチェック処理はレッスン18のTutorialDevelopのUserControllerから流用
+        if(res.hasErrors()) {
+            return edit(null, employee, model);
+        }
+        //更新処理未実装！次回はここから！
+
+        return "redirect:/employees";
     }
 
     // 従業員削除処理
