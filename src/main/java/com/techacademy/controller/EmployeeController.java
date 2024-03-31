@@ -99,7 +99,7 @@ public class EmployeeController {
     }
 
     //従業員更新画面
-    @PostMapping(value = "/{code}/update")
+    @GetMapping(value = "/{code}/update")
     public String update(@PathVariable String code, @AuthenticationPrincipal UserDetail userDetail, Model model) {
         return "employees/update";
     }
