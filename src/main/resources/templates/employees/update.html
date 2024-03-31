@@ -7,10 +7,43 @@
     <meta charset="utf-8">
     <title>従業員更新</title>
 </head>
+
 <body>
     <h1>従業員 更新</h1>
     <p>パスワードは変更する場合のみ入力してください</p>
 
-    <div> ここに </div>
+    <form method="post" th:action="@{/employees/{code}/update(code=${code})}" th:object="${employee}">
+
+        <label for="code">社員番号</label>
+        <input type="hidden" th:field="*{code}" id="*{code}" th:text="*{code}">
+        <br>
+
+        <label for="name">氏名</label>
+        <input type="text" th:field="*{name}" id="name">
+        <br>
+
+        <label for="password">パスワード</label>
+        <input type="password" th:field="*{password}" id="password">
+        <br>
+
+        <label for="role">権限</label>
+        <select th:field="*{role}" id="role">
+            <option
+                th:each="item:${T(com.techacademy.entity.Employee.Role).values()}"
+                th:value="${item}" th:text="${item.getValue()}" th:selected="*{role} == ${item}">
+        </select>
+        <br>
+
+        <div class="mt-5 row g-1">
+            <div class="col-auto">
+                <input type="submit" value="更新" class="btn btn-primary">
+            </div>
+            <div class="col-auto">
+                <a th:href="@{/employees}" class="btn btn-primary">戻る</a>
+            </div>
+        </div>
+    </form>
+
 </body>
+
 </html>
