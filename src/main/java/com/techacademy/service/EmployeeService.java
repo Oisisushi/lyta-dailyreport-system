@@ -9,11 +9,13 @@ import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.techacademy.constants.ErrorKinds;
 import com.techacademy.entity.Employee;
 import com.techacademy.repository.EmployeeRepository;
-import org.springframework.transaction.annotation.Transactional;
+
+import jakarta.annotation.Nullable;
 
 @Service
 public class EmployeeService {
@@ -46,6 +48,37 @@ public class EmployeeService {
 
         LocalDateTime now = LocalDateTime.now();
         employee.setCreatedAt(now);
+        employee.setUpdatedAt(now);
+
+        employeeRepository.save(employee);
+        return ErrorKinds.SUCCESS;
+    }
+
+    // 従業員更新
+    @Transactional
+    public ErrorKinds update(String code, String name, @Nullable String password, Employee.Role role) {
+
+        // 更新する従業員データを呼び出し
+        Employee employee = findByCode(code);
+
+        // 名前の更新
+        employee.setName(name);
+
+        // パスワードの更新(空の場合は呼び出した従業員データをそのままチェックさせる)
+        if (password != null) {
+            employee.setPassword(password);
+        }
+        // パスワードチェック
+        ErrorKinds result = employeePasswordCheck(employee);
+        if (ErrorKinds.CHECK_OK != result) {
+            return result;
+        }
+
+        // 権限の更新
+        employee.setRole(role);
+
+        // 更新日時の更新
+        LocalDateTime now = LocalDateTime.now();
         employee.setUpdatedAt(now);
 
         employeeRepository.save(employee);
