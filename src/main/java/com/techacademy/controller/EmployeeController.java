@@ -102,23 +102,32 @@ public class EmployeeController {
     @GetMapping(value = "/{code}/update")
     public String edit(@PathVariable String code, Employee employee, Model model) {
 
-        if(code == null) {
-            model.addAttribute("employee", employee);
-        } else {
-            model.addAttribute("employee", employeeService.findByCode(code));
-        }
+        model.addAttribute("employee", employeeService.findByCode(code));
+
         return "employees/update";
     }
 
     //従業員更新処理
     @PostMapping(value = "{code}/update")
-    public String update(@Validated Employee employee, BindingResult res, Model model) {
+    public String update(@PathVariable String code, @Validated Employee employee, BindingResult res, Model model) {
 
-        //エラーチェック処理はレッスン18のTutorialDevelopのUserControllerから流用
+        //氏名エラー有の場合はeditに遷移
         if(res.hasErrors()) {
-            return edit(null, employee, model);
+            return edit(code, employee, model);
         }
-        //更新処理未実装！次回はここから！
+
+        // 更新する値を画面から受け取ったemployeeより取り出して変数に登録
+        String name = employee.getName();
+        String password = employee.getPassword();
+        Employee.Role role = employee.getRole();
+
+        ErrorKinds result = employeeService.update(code, name, password, role);
+
+        if (ErrorMessage.contains(result)) {
+            model.addAttribute(ErrorMessage.getErrorName(result),ErrorMessage.getErrorValue(result));
+            model.addAttribute("employee", employeeService.findByCode(code));
+            return edit(code, employee, model);
+        }
 
         return "redirect:/employees";
     }
