@@ -15,7 +15,6 @@ import com.techacademy.constants.ErrorKinds;
 import com.techacademy.entity.Employee;
 import com.techacademy.repository.EmployeeRepository;
 
-import jakarta.annotation.Nullable;
 
 @Service
 public class EmployeeService {
@@ -56,7 +55,7 @@ public class EmployeeService {
 
     // 従業員更新
     @Transactional
-    public ErrorKinds update(String code, String name, @Nullable String password, Employee.Role role) {
+    public ErrorKinds update(String code, String name, String password, Employee.Role role) {
 
         // 更新する従業員データを呼び出し
         Employee employee = findByCode(code);
@@ -64,14 +63,15 @@ public class EmployeeService {
         // 名前の更新
         employee.setName(name);
 
-        // パスワードの更新(空の場合は呼び出した従業員データをそのままチェックさせる)
-        if (password != null) {
+        // パスワードが空白以外の時は更新
+        if (!("".equals(password))) {
             employee.setPassword(password);
-        }
-        // パスワードチェック
-        ErrorKinds result = employeePasswordCheck(employee);
-        if (ErrorKinds.CHECK_OK != result) {
-            return result;
+
+            // パスワードチェック
+            ErrorKinds result = employeePasswordCheck(employee);
+            if (ErrorKinds.CHECK_OK != result) {
+                return result;
+            }
         }
 
         // 権限の更新
