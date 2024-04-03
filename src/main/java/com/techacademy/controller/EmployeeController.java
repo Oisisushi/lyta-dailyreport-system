@@ -102,7 +102,12 @@ public class EmployeeController {
     @GetMapping(value = "/{code}/update")
     public String edit(@PathVariable String code, Employee employee, Model model) {
 
-        model.addAttribute("employee", employeeService.findByCode(code));
+        // updateからの遷移チェック、エラー表示に必要
+        if(code == null) {
+            model.addAttribute(employee);
+        } else {
+            model.addAttribute("employee", employeeService.findByCode(code));
+        }
 
         return "employees/update";
     }
@@ -113,12 +118,14 @@ public class EmployeeController {
 
         //氏名エラー有の場合はeditに遷移
         if(res.hasErrors()) {
-            return edit(code, employee, model);
+            return edit(null, employee, model);
         }
 
         // 更新する値を画面から受け取ったemployeeより取り出して変数に登録
         String name = employee.getName();
+
         String password = employee.getPassword();
+
         Employee.Role role = employee.getRole();
 
         ErrorKinds result = employeeService.update(code, name, password, role);
