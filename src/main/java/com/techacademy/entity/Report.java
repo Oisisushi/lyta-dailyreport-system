@@ -45,7 +45,7 @@ public class Report {
     private String content;
 
     // 社員番号
-    @Column(insertable=false, updatable=false, length = 10, nullable = false)
+    @Column(length = 10, nullable = false)
     @NotEmpty
     @Length(max = 10)
     private String employeeCode;
@@ -64,7 +64,7 @@ public class Report {
 
 
     @ManyToOne
-    @JoinColumn(name = "employeeCode", referencedColumnName = "code", nullable = false)
+    @JoinColumn(insertable=false, updatable=false, name = "employeeCode", referencedColumnName = "code", nullable = false)
     private Employee employee;
 
 }
