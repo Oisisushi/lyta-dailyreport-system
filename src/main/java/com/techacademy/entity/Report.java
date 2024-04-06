@@ -45,7 +45,7 @@ public class Report {
     private String content;
 
     // 社員番号
-    @Column(length = 10, nullable = false)
+    @Column(insertable=false, updatable=false, length = 10, nullable = false)
     @NotEmpty
     @Length(max = 10)
     private String employeeCode;
