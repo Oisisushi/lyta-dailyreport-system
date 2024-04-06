@@ -64,7 +64,7 @@ public class Report {
 
 
     @ManyToOne
-    @JoinColumn(name = "employee_code", referencedColumnName = "code", nullable = false)
+    @JoinColumn(name = "employeeCode", referencedColumnName = "code", nullable = false)
     private Employee employee;
 
 }
