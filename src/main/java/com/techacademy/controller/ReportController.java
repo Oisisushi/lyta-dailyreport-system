@@ -55,4 +55,11 @@ public class ReportController {
         return "reports/list";
     }
 
+    // 日報新規登録画面を表示
+    @GetMapping("/add")
+    public String create(Model model) {
+
+        return "reports/new";
+    }
+
 }
