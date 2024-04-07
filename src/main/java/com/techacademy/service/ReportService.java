@@ -22,9 +22,16 @@ public class ReportService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // 日報一覧表示処理
+    // 日報一覧全件表示処理
     public List<Report> findAll() {
+
         return reportRepository.findAll();
+    }
+
+    // 日報一覧1名分表示処理
+    public List<Report> findByEmployeeCode(String employeeCode){
+
+        return reportRepository.findByEmployeeCode(employeeCode);
     }
 
 }
