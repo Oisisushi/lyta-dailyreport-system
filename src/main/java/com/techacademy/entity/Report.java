@@ -27,7 +27,7 @@ public class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotEmpty
-    private Integer ID;
+    private Integer id;
 
     // 日付
     @Column(nullable = false)
