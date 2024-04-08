@@ -15,6 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -26,10 +27,10 @@ public class Report {
     // ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotEmpty
     private Integer id;
 
     // 日付
+    @NotNull
     @Column(nullable = false)
     private LocalDate reportDate;
 
@@ -46,7 +47,6 @@ public class Report {
 
     // 社員番号
     @Column(length = 10, nullable = false)
-    @NotEmpty
     @Length(max = 10)
     private String employeeCode;
 
