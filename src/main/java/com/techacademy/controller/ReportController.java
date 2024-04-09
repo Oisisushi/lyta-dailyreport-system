@@ -87,7 +87,18 @@ public class ReportController {
     // 日報詳細画面
     @GetMapping("/{id}/")
     public String detail(@PathVariable Integer id, Model model) {
+
+        model.addAttribute("report", reportService.findById(id));
         return "reports/detail";
+    }
+
+    // 日報削除処理
+    @PostMapping(value = "/{id}/delete")
+    public String delete(@PathVariable Integer id) {
+        // 削除処理を呼び出し
+        reportService.delete(id);
+
+        return "redirect:/reports";
     }
 
 }
