@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.techacademy.constants.ErrorKinds;
 import com.techacademy.constants.ErrorMessage;
 import com.techacademy.entity.Employee;
+import com.techacademy.entity.Report;
 import com.techacademy.service.ReportService;
 import com.techacademy.service.UserDetail;
 
@@ -57,9 +58,24 @@ public class ReportController {
 
     // 日報新規登録画面を表示
     @GetMapping("/add")
-    public String create(Model model) {
+    public String create(@AuthenticationPrincipal UserDetail userDetail, @ModelAttribute Report report) {
 
+        report.setEmployee(userDetail.getEmployee());
         return "reports/new";
+
+    }
+
+    // 日報新規登録処理
+    @PostMapping("/add")
+    public String add(@AuthenticationPrincipal UserDetail userDetail, @Validated Report report, BindingResult res, Model model) {
+
+        // バリデーションチェック
+        if (res.hasErrors()) {
+
+            return create(userDetail, report);
+        }
+
+        return "redirect:/";
     }
 
 }
