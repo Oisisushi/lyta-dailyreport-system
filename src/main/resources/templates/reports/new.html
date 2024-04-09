@@ -35,13 +35,13 @@
                                 <br>
 
                                 <label>タイトル</label><br>
-                                <input type="text" th:field="*{title}" th:errorclass="err" id="title"><br>
+                                <input type="text" class="form-control" th:field="*{title}" th:errorclass="err" id="title"><br>
                                 <span th:errors="*{title}" class="text-danger"></span>
                                 <br>
                                 <br>
 
                                 <label>内容</label><br>
-                                <textarea th:field="*{content}" th:errorclass="err" id="content"></textarea><br>
+                                <textarea class="form-control" rows="10" th:field="*{content}" th:errorclass="err" id="content"></textarea><br>
                                 <span th:errors="*{content}" class="text-danger"></span>
                                 <br>
                                 <br>
