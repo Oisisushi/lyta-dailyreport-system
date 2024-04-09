@@ -13,6 +13,31 @@
             <div class="container-fluid p-0">
                 <h1 class="h1 mb-3">日報 更新</h1>
             </div>
+            <p>日付、初期値をDBからセットする</p>
+            <input type="date"><br>
+            <br>
+
+            <p>氏名</p>
+            <p>ここに名前を表示</p>
+            <br>
+
+            <p>タイトル</p>
+            <p>テキスト、textで表示、初期値はDBから持ってくる</p>
+            <br>
+
+            <p>内容</p>
+            <p>テキストエリア、新規画面と同じ構造になる？初期値はDB</p>
+            <br>
+
+            <div class="mt-5 row g-1">
+                <div class="col-auto">
+                    <input type="submit" value="更新" class="btn btn-primary">
+                </div>
+                <div class="col-auto">
+                    <a th:href="@{/reports}" class="btn btn-primary">戻る</a>
+                </div>
+            </div>
+
         </div>
     </div>
 
