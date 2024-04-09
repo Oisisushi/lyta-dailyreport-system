@@ -62,7 +62,6 @@ public class ReportController {
 
         report.setEmployee(userDetail.getEmployee());
         return "reports/new";
-
     }
 
     // 日報新規登録処理
@@ -83,6 +82,12 @@ public class ReportController {
         }
 
         return "redirect:/";
+    }
+
+    // 日報詳細画面
+    @GetMapping("/{id}/")
+    public String detail(@PathVariable Integer id, Model model) {
+        return "reports/detail";
     }
 
 }
