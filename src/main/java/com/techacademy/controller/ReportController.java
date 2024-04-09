@@ -71,7 +71,14 @@ public class ReportController {
 
         // バリデーションチェック
         if (res.hasErrors()) {
+            return create(userDetail, report);
+        }
 
+        report.setEmployeeCode(userDetail.getEmployee().getCode());
+        ErrorKinds result = reportService.save(report);
+
+        if (ErrorMessage.contains(result)) {
+            model.addAttribute(ErrorMessage.getErrorName(result), ErrorMessage.getErrorValue(result));
             return create(userDetail, report);
         }
 
