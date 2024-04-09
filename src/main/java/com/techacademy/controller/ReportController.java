@@ -96,8 +96,28 @@ public class ReportController {
     @GetMapping(value = "/{id}/update")
     public String edit(@PathVariable Integer id, Model model) {
 
+        if(id == null) {
+            return "reports/update";
+        }
+
         model.addAttribute("report", reportService.findById(id));
         return "reports/update";
+    }
+
+    // 日報更新処理
+    @PostMapping(value = "/{id}/update")
+    public String update(@PathVariable Integer id, @Validated Report report, BindingResult res, Model model) {
+
+        // バリデーションチェック
+        if(res.hasErrors()) {
+
+            report.setEmployee(reportService.findById(id).getEmployee());
+
+            model.addAttribute("report", report);
+            return edit(null, model);
+        }
+
+        return "redirect:/";
     }
 
     // 日報削除処理
