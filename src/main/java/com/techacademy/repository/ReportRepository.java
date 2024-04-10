@@ -15,9 +15,6 @@ public interface ReportRepository extends JpaRepository<Report, String> {
     // employee_codeが一致する日報を検索してリスト化する
     List<Report> findByEmployeeCode(String employeeCode);
 
-    // employee_codeとreport_dateが一致する日報を検索する
-    boolean existsByEmployeeCodeAndReportDate(String employeeCode, LocalDate reportDate);
-
     // report_dateとemployee_codeが一致する日報を検索する
     Optional<Report> findByReportDateAndEmployeeCode(LocalDate reportDate, String employeeCode);
 
