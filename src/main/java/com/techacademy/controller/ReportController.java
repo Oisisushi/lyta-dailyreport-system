@@ -1,7 +1,8 @@
 package com.techacademy.controller;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -73,6 +74,7 @@ public class ReportController {
             return create(userDetail, report);
         }
 
+        // 日報保存サービスを呼び出し
         report.setEmployeeCode(userDetail.getEmployee().getCode());
         ErrorKinds result = reportService.save(report);
 
@@ -96,6 +98,7 @@ public class ReportController {
     @GetMapping(value = "/{id}/update")
     public String edit(@PathVariable Integer id, Model model) {
 
+        // updateからの遷移チェック
         if(id == null) {
             return "reports/update";
         }
@@ -108,15 +111,30 @@ public class ReportController {
     @PostMapping(value = "/{id}/update")
     public String update(@PathVariable Integer id, @Validated Report report, BindingResult res, Model model) {
 
+        // 従業員情報を再設定
+        report.setEmployee(reportService.findById(id).getEmployee());
+
         // バリデーションチェック
         if(res.hasErrors()) {
-
-            report.setEmployee(reportService.findById(id).getEmployee());
 
             model.addAttribute("report", report);
             return edit(null, model);
         }
 
+        // 更新するデータを取り出して変数にセット
+        String employeeCode = report.getEmployee().getCode();
+        LocalDate reportDate = report.getReportDate();
+        String title = report.getTitle();
+        String content = report.getContent();
+
+        ErrorKinds result = reportService.update(employeeCode, id, reportDate, title, content);
+
+        if (ErrorMessage.contains(result)) {
+
+            model.addAttribute(ErrorMessage.getErrorName(result), ErrorMessage.getErrorValue(result));
+            model.addAttribute(report);
+            return edit(null, model);
+            }
         return "redirect:/";
     }
 
