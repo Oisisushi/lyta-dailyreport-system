@@ -70,7 +70,7 @@ public class ReportService {
     public ErrorKinds update(String employeeCode, Integer id, LocalDate reportDate, String title, String content) {
 
         // 業務チェック
-        ErrorKinds result = reportDateCheck(id, reportDate, employeeCode);
+        ErrorKinds result = reportUpdateCheck(id, reportDate, employeeCode);
         if(ErrorKinds.CHECK_OK != result) {
             return result;
         }
@@ -113,7 +113,7 @@ public class ReportService {
     }
 
     // 日報を更新する際に同一の日付かつ同じ従業員の日報が存在しないかをチェックする処理
-    private ErrorKinds reportDateCheck(Integer id, LocalDate reportDate, String employeeCode) {
+    private ErrorKinds reportUpdateCheck(Integer id, LocalDate reportDate, String employeeCode) {
 
         Optional<Report> option = reportRepository.findByReportDateAndEmployeeCode(reportDate, employeeCode);
         Report report = option.orElse(null);
