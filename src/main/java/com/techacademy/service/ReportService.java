@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.techacademy.constants.ErrorKinds;
-import com.techacademy.entity.Employee;
 import com.techacademy.entity.Report;
 import com.techacademy.repository.ReportRepository;
 
@@ -103,7 +102,10 @@ public class ReportService {
     // ログイン中の従業員かつ入力した日付の日報データが存在するかをチェックする処理
     private ErrorKinds reportDateCheck(Report report) {
 
-        if(reportRepository.existsByEmployeeCodeAndReportDate(report.getEmployeeCode(), report.getReportDate())) {
+        Optional<Report> option = reportRepository.findByReportDateAndEmployeeCode(report.getReportDate(), report.getEmployeeCode());
+        Report checkDate = option.orElse(null);
+
+        if(checkDate != null) {
             return ErrorKinds.DATECHECK_ERROR;
         }
 
