@@ -13,41 +13,47 @@
             <div class="container-fluid p-0">
                 <h1 class="h3 mb-3">日報 新規登録</h1>
             </div>
-            <div class="col-12 col-xxl-6">
+            <div class="col-12 col-xxl">
 
                 <div class="col-xl-12">
                     <div class="card">
                         <div class="card-body">
 
                             <form th:action="@{/reports/add}" th:object="${report}" th:method="post">
-                                <div class="wizard wizard-success mb-4">
-                                <label>日付</label><br>
-                                <input type="date" th:field="*{reportDate}" th:errorclass="err" id="reportDate"><br>
-                                <span th:errors="*{reportDate}" class="text-danger"></span>
-                                <span th:if="${reportDateError} neq null" th:text="${reportDateError}" class="text-danger"></span>
-                                <br>
-                                <br>
+                                <div class="wizard wizard-success mb-1">
+                                    <div class="mb-3 col-3">
+                                        <label class="form-label" for="reportDate">日付</label>
+                                        <p class="mb-1"></p>
+                                        <input class="form-control" type="date" th:field="*{reportDate}"
+                                            th:errorclass="err" id="reportDate">
+                                        <span th:errors="*{reportDate}" class="text-danger"></span>
+                                        <span th:if="${reportDateError} neq null" th:text="${reportDateError}"
+                                            class="text-danger"></span>
+                                    </div>
 
-                                <label>氏名</label>
-                                <p th:text="${report.employee.name}"></p>
-                                <input type="hidden" th:field="${report.employee.code}" id="code">
-                                <!-- hiddenで入力者が誰かを保持させる -->
-                                <br>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="code">氏名</label>
+                                        <p th:text="${report.employee.name}"></p>
+                                        <input type="hidden" th:field="${report.employee.code}" id="code">
+                                        <!--/* hiddenで入力者が誰かを保持させる */-->
+                                    </div>
 
-                                <label>タイトル</label><br>
-                                <input type="text" class="form-control" th:field="*{title}" th:errorclass="err" id="title"><br>
-                                <span th:errors="*{title}" class="text-danger"></span>
-                                <br>
-                                <br>
+                                    <div class="mb-3 col-7">
+                                        <label class="form-label" for="title">タイトル</label><br>
+                                        <input type="text" class="form-control" th:field="*{title}" th:errorclass="err"
+                                            id="title">
+                                        <span th:errors="*{title}" class="text-danger"></span>
+                                    </div>
 
-                                <label>内容</label><br>
-                                <textarea class="form-control" rows="10" th:field="*{content}" th:errorclass="err" id="content"></textarea><br>
-                                <span th:errors="*{content}" class="text-danger"></span>
-                                <br>
-                                <br>
+                                    <div class="mb-5 col-11">
+                                        <label class="form-label" for="content">内容</label>
+                                        <textarea class="form-control" rows="10" th:field="*{content}"
+                                            th:errorclass="err" id="content"></textarea>
+                                        <span th:errors="*{content}" class="text-danger"></span>
+                                    </div>
 
-                                <input type="submit" value="登録" class="btn btn-primary">
-                                <a th:href="@{/reports}" class="btn btn-primary">戻る</a>
+                                    <input type="submit" value="登録" class="btn btn-primary">
+                                    <a th:href="@{/reports}" class="btn btn-primary">戻る</a>
                                 </div>
                             </form>
                         </div>

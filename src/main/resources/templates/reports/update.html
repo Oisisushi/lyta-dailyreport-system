@@ -19,23 +19,25 @@
                         <form method="post" th:action="@{/reports/{id}/update(id=${report.id})}" th:object="${report}">
                             <div class="wizard wizard-success mt-0 mb-4">
 
-                                <div class="mb-3">
+                                <div class="mb-3 col-3">
                                     <label class="form-label" for="date">日付</label>
-                                    <p class="mb-1"></p>
-                                    <input type="date" th:field="*{reportDate}" th:errorclass="err" id="date"><br>
+                                    <div class="mb-1"></div>
+                                    <input class="form-control" type="date" th:field="*{reportDate}" th:errorclass="err"
+                                        id="date">
                                     <span th:errors="*{reportDate}" class="text-danger"></span>
                                     <span th:if="${reportDateError} neq null" th:text="${reportDateError}"
                                         class="text-danger"></span>
 
                                 </div>
 
-                                <div class="mb-1">
+                                <div class="mb-3">
                                     <label class="form-label" for="name">氏名</label>
-                                    <p class="mb-1" th:field="*{employee.name}" th:text="*{employee.name}" id="name"></p>
+                                    <p class="mb-1" th:field="*{employee.name}" th:text="*{employee.name}" id="name">
+                                    </p>
 
                                 </div>
 
-                                <div class="mb-3">
+                                <div class="mb-3 col-8">
                                     <label class="form-label" for="title">タイトル</label>
                                     <input type="text" class="form-control" th:field="*{title}" th:errorclass="err"
                                         id="title"></input>
@@ -44,7 +46,7 @@
 
                                 </div>
 
-                                <div class="mb-3">
+                                <div class="mb-3 col-11">
                                     <label class="form-label" for="content">内容</label>
                                     <textarea class="form-control" rows="10" th:field="*{content}" th:errorclass="err"
                                         id="content"></textarea>
